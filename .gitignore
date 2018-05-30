@@ -584,3 +584,4 @@ fabric.properties
 NJUDataset/
 *.jpg
 *.txt
+/NJUID_Cropped/
