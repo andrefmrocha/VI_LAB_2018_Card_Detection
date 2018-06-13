@@ -1,5 +1,5 @@
 from CV_Dataset import *
-
+from CV_CNN import *
 from sklearn.model_selection import train_test_split
 x_Card, x_Camera = open_images()
 list_card, list_camera, list_labels = gen_data(x_Card, x_Camera)
