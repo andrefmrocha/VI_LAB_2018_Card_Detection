@@ -4,10 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-imlist = sorted(os.listdir("./NJUID_Cropped"))
-# print(imlist)
-x_Card = np.array([cv2.imread("./NJUID_Cropped/" + img) for img in imlist if "card" in img])
-x_Camera = np.array([cv2.imread("./NJUID_Cropped/" + img) for img in imlist if "camera" in img])
+def open_images():
+    imlist = sorted(os.listdir("./NJUID_Cropped"))
+    x_Card = np.array([cv2.imread("./NJUID_Cropped/" + img) for img in imlist if "card" in img])
+    x_Camera = np.array([cv2.imread("./NJUID_Cropped/" + img) for img in imlist if "camera" in img])
+    return x_Card, x_Camera
 # print(len(list_labels))
 # prop - Proportion of negatives
 # random_list = random.sample(range(3), 2)
@@ -27,10 +28,3 @@ def gen_data(card, camera, prop = 1):
         i+=1
 
     return list_card, list_camera, list_labels
-list_card, list_camera, list_labels = gen_data(x_Card, x_Camera)
-
-plt.imshow(list_card[300])
-plt.show()
-plt.imshow(list_camera[300])
-plt.show()
-print(list_labels[300])
