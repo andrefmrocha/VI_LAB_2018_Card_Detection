@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
+
 def open_images():
     imlist = sorted(os.listdir("./NJUID_Cropped"))
     x_Card = np.array([cv2.imread("./NJUID_Cropped/" + img) for img in imlist if "card" in img])
@@ -26,5 +27,8 @@ def gen_data(card, camera, prop = 1):
             if(j != i and len(list_camera) != len(list_card)):
                 list_camera.append(list_camera[j])
         i+=1
+    
+    X = {'card' : list_card, 'camera' : list_camera}
+    return X
 
-    return list_card, list_camera, list_labels
+
