@@ -1,6 +1,7 @@
 from CV_Dataset import *
 from CV_CNN import *
 from sklearn.model_selection import train_test_split
+from keras.utils import to_categorical
 x_Card, x_Camera = open_images()
 list_card, list_camera, list_labels = gen_data(x_Card, x_Camera)
 # 60% - train, 20%, 20% - test, validation
@@ -12,13 +13,25 @@ x_Test_Camera, x_Val_Camera= train_test_split(x_Test_Camera, test_size=0.5, rand
 x_Train = {"card": x_Train_Card, "camera": x_Train_Camera}
 x_Test = {"card": x_Test_Card, "camera": x_Test_Camera}
 x_Val = {"card": x_Val_Card, "camera": x_Val_Camera}
+input_shape = [160,160,3]
+base_network, opt = create_base_network(input_shape,8,8)
+input_card = Input(shape=input_shape)
+input_camera = Input(shape=input_shape)
 
-cnnmodel, opt = create_base_network([160,160,3],8,8)
+processed_card = base_network(input_card)
+processed_camera = base_network(input_camera)
 
-cnnmodel.add(Flatten())
-cnnmodel.add(Dense(512,activation='relu'))
-cnnmodel.add(Dense(2,activation='softmax'))
+distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([processed_card,processed_camera])
 
-xen_loss = losses.binary_crossentropy
+cnn_model = Model([input_card,input_camera],distance)
+# cnnmodel.add(Flatten())
+# cnnmodel.add(Dense(512,activation='relu'))
+# cnnmodel.add(Dense(2,activation='softmax'))
+#
+xen_loss = losses.categorical_crossentropy
+y_Train = to_categorical(y_Train,2)
+y_Val = to_categorical(y_Val, 2)
+y_Test = to_categorical(y_Test, 2)
+cnn_model.compile(loss=xen_loss, optimizer= opt, metrics=['accuracy'])
 
-cnnmodel.compile(loss=xen_loss, optimizer= opt, metrics=['acuracy'])
+cnn_model.fit([x_Train["card"], x_Train["camera"]],[y_Train,y_Train], epochs=20, batch_size=32, validation_data=(x_Val,y_Val))
