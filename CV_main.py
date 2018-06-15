@@ -12,3 +12,13 @@ x_Test_Camera, x_Val_Camera= train_test_split(x_Test_Camera, test_size=0.5, rand
 x_Train = {"card": x_Train_Card, "camera": x_Train_Camera}
 x_Test = {"card": x_Test_Card, "camera": x_Test_Camera}
 x_Val = {"card": x_Val_Card, "camera": x_Val_Camera}
+
+cnnmodel, opt = create_base_network([160,160,3],8,8)
+
+cnnmodel.add(Flatten())
+cnnmodel.add(Dense(512,activation='relu'))
+cnnmodel.add(Dense(2,activation='softmax'))
+
+xen_loss = losses.binary_crossentropy
+
+cnnmodel.compile(loss=xen_loss, optimizer= opt, metrics=['acuracy'])
