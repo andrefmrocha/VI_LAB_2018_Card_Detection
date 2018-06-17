@@ -11,16 +11,16 @@ import matplotlib.pyplot as plt
 def create_base_network(input_shape, numb_conv32, numb_conv64):
     inputs = Input(shape=input_shape)
 
-    x = Conv2(16, kernel_size={3,3}, activation='relu' )(inputs)
+    x = Conv2(16, kernel_size=(3,3), activation='relu' )(inputs)
 
     
     for i in range(numb_conv32):
-        x= Conv2(32, kernel_size={3,3}, activation='relu')(x)
+        x= Conv2(32, kernel_size=(3,3), activation='relu')(x)
         if(i%2 ==0):
             MaxPooling2D(pool_size=(2,2)) 
     
     for i in range(numb_conv64):
-        x= Conv2(64, kernel_size={3,3}, activation='relu')(x)
+        x= Conv2(64, kernel_size=(3,3), activation='relu')(x)
         if(i%2 ==0):
             MaxPooling2D(pool_size=(2,2)) 
         
