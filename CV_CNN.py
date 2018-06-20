@@ -23,13 +23,14 @@ def create_base_network(input_shape, numb_conv32, numb_conv64):
         x = Conv2D(32, kernel_size=(3,3), activation='relu' )(x)
         x = Conv2D(32, kernel_size=(3,3), activation='relu' )(x)
         # if(i%2 !=0):
-        MaxPooling2D(pool_size=(2,2))
+        x = MaxPooling2D(pool_size=(2,2))(x)
 
     for i in range(numb_conv64):
         x = Conv2D(64, kernel_size=(3,3), activation='relu' )(x)
         x = Conv2D(64, kernel_size=(3,3), activation='relu' )(x)
         # if(i%2 ==0):
-        MaxPooling2D(pool_size=(2,2))
+        x = MaxPooling2D(pool_size=(2,2))(x)
+        # MaxPooling2D(pool_size=(2,2))
 
     opt = optimizers.Adam(lr=1e-4)
 
