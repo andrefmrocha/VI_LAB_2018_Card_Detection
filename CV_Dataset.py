@@ -29,5 +29,3 @@ def gen_data(card, camera, prop = 1):
         i+=1
 
     return list_card,list_camera,y
-
-

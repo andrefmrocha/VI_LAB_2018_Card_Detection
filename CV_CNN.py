@@ -9,6 +9,7 @@ from keras import optimizers, losses
 from keras.regularizers import l2
 from keras import backend as K
 import matplotlib.pyplot as plt
+import random
 
 def create_base_network(input_shape, numb_conv32, numb_conv64):
     inputs = Input(shape=input_shape)
@@ -21,27 +22,19 @@ def create_base_network(input_shape, numb_conv32, numb_conv64):
     for i in range(numb_conv32):
         x = Conv2D(32, kernel_size=(3,3), activation='relu' )(x)
         x = Conv2D(32, kernel_size=(3,3), activation='relu' )(x)
-        # x= Conv2D(32, kernel_size={3,3}, activation='relu')(x)
-        # x= Conv2D(32, kernel_size={3,3}, activation='relu')(x)
         # if(i%2 !=0):
         MaxPooling2D(pool_size=(2,2))
 
     for i in range(numb_conv64):
         x = Conv2D(64, kernel_size=(3,3), activation='relu' )(x)
         x = Conv2D(64, kernel_size=(3,3), activation='relu' )(x)
-        # x= Conv2D(64, kernel_size={3,3}, activation='relu')(x)
-        # x= Conv2D(64, kernel_size={3,3}, activation='relu')(x)
         # if(i%2 ==0):
         MaxPooling2D(pool_size=(2,2))
 
-        opt = optimizers.Adam(lr=1e-4)
+    opt = optimizers.Adam(lr=1e-4)
 
     x = Flatten()(x)
-    x = Dense(128, activation='relu')(x)
-    # x = Dropout(0.1)(x)
-    x = Dense(128, activation='relu')(x)
-    # x = Dropout(0.1)(x)
-    x = Dense(128, activation='relu')(x)
+    x = Dense(256, activation='relu')(x)
 
     return Model(inputs, x),opt
 
@@ -54,3 +47,25 @@ def euclidean_distance(vects):
 def eucl_dist_output_shape(shapes):
     shape1, shape2 = shapes
     return (shape1[0], 1)
+num_classes = 2
+
+
+
+def create_pairs(x, digit_indices):
+    '''Positive and negative pair creation.
+    Alternates between positive and negative pairs.
+    '''
+    pairs = []
+    labels = []
+    n = min([len(digit_indices[d]) for d in range(num_classes)]) - 1
+    for d in range(num_classes):
+        for i in range(n):
+            z1, z2 = digit_indices[d][i], digit_indices[d][i + 1]
+            pairs += [[x[z1], x[z2]]]
+            inc = random.randrange(1, num_classes)
+            dn = (d + inc) % num_classes
+            z1, z2 = digit_indices[d][i], digit_indices[dn][i]
+            pairs += [[x[z1], x[z2]]]
+            labels += [1, 0]
+    return np.array(pairs), np.array(labels)
+

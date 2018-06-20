@@ -28,10 +28,12 @@ cnn_model = Model([input_card,input_camera],distance)
 # cnnmodel.add(Dense(512,activation='relu'))
 # cnnmodel.add(Dense(2,activation='softmax'))
 #
+num_classes = 2
 xen_loss = losses.categorical_crossentropy
 y_Train = to_categorical(y_Train,2)
 y_Val = to_categorical(y_Val, 2)
 y_Test = to_categorical(y_Test, 2)
 cnn_model.compile(loss=xen_loss, optimizer= opt, metrics=['accuracy'])
-
-cnn_model.fit([x_Train["card"], x_Train["camera"]],[y_Train,y_Train], epochs=20, batch_size=32, validation_data=(x_Val,y_Val))
+digit_indices = [np.where(y_Train == i)[0] for i in range(num_classes)]
+tr_pairs, tr_y = create_pairs((x_Train["card"],x_Train["camera"]),digit_indices)
+# cnn_model.fit(x=x_Train["card"], y = y_Train, epochs=20,   batch_size=32, validation_data=(x_Val,y_Val))
