@@ -6,7 +6,7 @@ from keras.models import Sequential
 from keras.layers import Dense, MaxPooling2D, Activation, Flatten, Conv2D, Lambda
 from keras.models import Model
 from keras import optimizers, losses
-from keras.regularizers import l2
+from keras import regularizers
 from keras import backend as K
 import matplotlib.pyplot as plt
 import random
