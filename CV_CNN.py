@@ -1,6 +1,6 @@
 from keras import Input
 import numpy as np
-from keras.layers import Dense, MaxPooling2D, Flatten, Conv2D
+from keras.layers import Dense, MaxPooling2D, Flatten, Conv2D, Dropout
 from keras.models import Model
 from keras import optimizers, losses
 from keras import regularizers
@@ -17,13 +17,17 @@ def create_base_network(input_shape, numb_conv32, numb_conv64):
 
     for i in range(numb_conv32):
         x = Conv2D(32, kernel_size=(3,3), activation='relu', kernel_regularizer=regularizers.l2(1e-3))(x)
+        x = Dropout(0.1)(x)
         x = Conv2D(32, kernel_size=(3,3), activation='relu',kernel_regularizer=regularizers.l2(1e-3))(x)
+        x = Dropout(0.1)(x)
         # if(i%2 !=0):
         x = MaxPooling2D(pool_size=(2,2))(x)
 
     for i in range(numb_conv64):
         x = Conv2D(64, kernel_size=(3,3), activation='relu', kernel_regularizer=regularizers.l2(1e-3))(x)
+        x = Dropout(0.1)(x)
         x = Conv2D(64, kernel_size=(3,3), activation='relu', kernel_regularizer=regularizers.l2(1e-3))(x)
+        x = Dropout(0.1)(x)
         # if(i%2 ==0):
         x = MaxPooling2D(pool_size=(2,2))(x)
         # MaxPooling2D(pool_size=(2,2))
