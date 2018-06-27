@@ -24,11 +24,11 @@ processed_camera = base_network(input_camera)
 
 merged_network = concatenate([processed_card,processed_camera])
 # distance = Lambda(euclidean_distance, output_shape=eucl_dist_output_shape)([processed_card,processed_camera])
-merged_network = Dense(128, activation='relu', activity_regularizer=1e-3)(merged_network)
-merged_network = Dense(64, activation='relu', activity_regularizer=1e-3)(merged_network)
-merged_network = Dense(32, activation='relu', activity_regularizer=1e-3)(merged_network)
-merged_network = Dense(16, activation='relu', activity_regularizer=1e-3)(merged_network)
-merged_network = Dense(2, activation='softmax', activity_regularizer=1e-3)(merged_network)
+merged_network = Dense(128, activation='relu', kernel_regularizer=1e-3)(merged_network)
+merged_network = Dense(64, activation='relu', kernel_regularizer=1e-3)(merged_network)
+merged_network = Dense(32, activation='relu', kernel_regularizer=1e-3)(merged_network)
+merged_network = Dense(16, activation='relu', kernel_regularizer=1e-3)(merged_network)
+merged_network = Dense(2, activation='softmax', kernel_regularizer=1e-3)(merged_network)
 
 cnn_model = Model(inputs=[input_card,input_camera],outputs = merged_network)
 
