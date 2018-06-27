@@ -35,7 +35,7 @@ def create_base_network(input_shape, numb_conv32, numb_conv64):
     opt = optimizers.Adam(lr=1e-4)
 
     x = Flatten()(x)
-    x = Dense(256, activation='relu', activity_regularizer=1e-3)(x)
+    x = Dense(256, activation='relu', kernel_regularizer=1e-3)(x)
 
     return Model(inputs, x),opt
 
