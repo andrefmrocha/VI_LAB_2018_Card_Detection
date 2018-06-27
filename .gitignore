@@ -585,3 +585,4 @@ NJUDataset/
 *.jpg
 *.txt
 /NJUID_Cropped/
+model.json
