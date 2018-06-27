@@ -1,14 +1,10 @@
 from keras import Input
 import numpy as np
-import keras
-from keras.preprocessing.image import ImageDataGenerator
-from keras.models import Sequential
-from keras.layers import Dense, MaxPooling2D, Activation, Flatten, Conv2D, Lambda
+from keras.layers import Dense, MaxPooling2D, Flatten, Conv2D
 from keras.models import Model
 from keras import optimizers, losses
 from keras import regularizers
 from keras import backend as K
-import matplotlib.pyplot as plt
 import random
 
 def create_base_network(input_shape, numb_conv32, numb_conv64):
