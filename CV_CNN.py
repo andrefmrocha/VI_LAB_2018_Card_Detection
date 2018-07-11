@@ -15,7 +15,6 @@ def create_base_network(input_shape, numb_conv32, numb_conv64):
     x = Dropout(0.5)(x)
     # if(numb_conv32 != 0):
     #     numb_conv32 = numb_conv32 - 1
-
     for i in range(numb_conv32):
         x = Conv2D(32, kernel_size=(3,3), activation='relu', kernel_regularizer=regularizers.l2(1e-3))(x)
         x = Dropout(0.5)(x)

@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 import random
 
-
 def open_images():
     imlist = sorted(os.listdir("./NJUID_Cropped"))
     x_Card = np.array([cv2.imread("./NJUID_Cropped/" + img) for img in imlist if "card" in img])
