@@ -1,4 +1,4 @@
-from keras.layers import Input, Conv2D, MaxPooling2D, Activation, BatchNormalization
+from keras.layers import Input, Conv2D, MaxPooling2D, Activation, BatchNormalization, Conv2DTranspose
 from keras.models import Model
 from keras import regularizers
 
@@ -27,3 +27,11 @@ def create_enc(input_shape):
     encoder = Activation('relu')(encoder)
     encoder = MaxPooling2D(pool_size=(2,2))(encoder)
     return encoder
+
+def create_dec(input_shape, encoder):
+    decoder = Conv2DTranspose(8, kernel_size=(3,3), activation='relu', strides=2)(encoder)
+    decoder = Conv2DTranspose(16, kernel_size=(3,3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(32, kernel_size=(3,3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(64, kernel_size=(3,3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(128, kernel_size=(3,3), activation='relu', strides=2)(decoder)
+    return decoder

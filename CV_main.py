@@ -37,7 +37,9 @@ merged_network = Dense(16, activation='relu', kernel_regularizer=regularizers.l2
 merged_network = Dropout(0.5)(merged_network)
 merged_network = Dense(2, activation='softmax', kernel_regularizer=regularizers.l2(1e-3))(merged_network)
 
+
 cnn_model = Model(inputs=[input_card,input_camera],outputs = merged_network)
+
 
 xen_loss = losses.binary_crossentropy
 y_Train = to_categorical(y_Train,2)
