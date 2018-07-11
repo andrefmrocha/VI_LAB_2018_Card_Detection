@@ -58,12 +58,15 @@ def create_enc_dense(input_shape):
     return encoder
 #(6,6,8)
 def create_dec(encoder):
-    decoder = Conv2DTranspose(8, kernel_size=(3,3), activation='relu', strides=2)(encoder)
-    decoder = Conv2DTranspose(16, kernel_size=(3,3), activation='relu', strides=2)(decoder)
-    decoder = Conv2DTranspose(32, kernel_size=(3,3), activation='relu', strides=2)(decoder)
-    decoder = Conv2DTranspose(64, kernel_size=(3,3), activation='relu', strides=2)(decoder)
-    decoder = Conv2DTranspose(128, kernel_size=(3,3), activation='relu', strides=2)(decoder)
-    decoder = Reshape((160,160,3))(decoder)
+    decoder = Conv2DTranspose(8, kernel_size=(3, 3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(16, kernel_size=(3, 3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(32, kernel_size=(3, 3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(64, kernel_size=(3, 3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(128, kernel_size=(3, 3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(64, kernel_size=(3, 3), activation='relu', strides=1)(decoder)
+    decoder = Conv2DTranspose(32, kernel_size=(3, 3), activation='relu', strides=1)(decoder)
+    decoder = Conv2DTranspose(16, kernel_size=(3, 3), activation='relu', strides=1)(decoder)
+    decoder = Conv2DTranspose(1, kernel_size=(3, 3), activation='relu', strides=1)(decoder)
     return decoder
 
 def create_dec_dense(input_shape):
@@ -74,4 +77,8 @@ def create_dec_dense(input_shape):
     decoder = Conv2DTranspose(32, kernel_size=(3,3), activation='relu', strides=2)(decoder)
     decoder = Conv2DTranspose(64, kernel_size=(3,3), activation='relu', strides=2)(decoder)
     decoder = Conv2DTranspose(128, kernel_size=(3,3), activation='relu', strides=2)(decoder)
+    decoder = Conv2DTranspose(64, kernel_size=(3,3), activation='relu', strides=1)(decoder)
+    decoder = Conv2DTranspose(32, kernel_size=(3,3), activation='relu', strides=1)(decoder)
+    decoder = Conv2DTranspose(16, kernel_size=(3,3), activation='relu', strides=1)(decoder)
+    decoder = Conv2DTranspose(1, kernel_size=(3,3), activation='relu', strides=1)(decoder)
     return decoder
