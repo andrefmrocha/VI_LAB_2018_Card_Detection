@@ -17,11 +17,11 @@ x_Test = {"card": x_Test_Card, "camera": x_Test_Camera}
 x_Val = {"card": x_Val_Card, "camera": x_Val_Camera}
 
 xen_loss = losses.binary_crossentropy
-y_Train = to_categorical(y_Train,2)
-y_Val = to_categorical(y_Val, 2)
-y_Test = to_categorical(y_Test, 2)
 
-encoder = create_enc(input_shape)
+encoder = create_enc_dense(input_shape)
+encoder.summary()
 decoder = create_dec_dense()
+decoder.summary()
 
-
+input_card = Input(shape=input_shape)
+input_camera = Input(shape=input_shape)

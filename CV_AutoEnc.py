@@ -67,10 +67,12 @@ def create_enc_dense(input_shape):
     encoder = MaxPooling2D(pool_size=(2,2))(encoder)
     encoder = Flatten()(encoder)
     encoder = Dense(256, activation='relu', kernel_regularizer=regularizers.l2(1e-3))(encoder)
-    return encoder
+    return Model(inputs, encoder)
 #(6,6,8)
-def create_dec_dense(input_shape=256, img_size=(6,6,8)):
-    decoder = Dense(256, activation='relu', kernel_regularizer=regularizers.l2(1e-3), input_shape=(input_shape,))
+def create_dec_dense(input_shape=(256,), img_size=(3,3,8)):
+    inputs = Input(shape=input_shape)
+    decoder = Dense(256, activation='relu', kernel_regularizer=regularizers.l2(1e-3))(inputs)
+    decoder = Dense(72, activation='relu', kernel_regularizer=regularizers.l2(1e-3))(decoder)
     decoder = Reshape(img_size)(decoder)
     decoder = Conv2DTranspose(8, kernel_size=(3,3), activation='relu', strides=2)(decoder)
     decoder = Conv2DTranspose(16, kernel_size=(3,3), activation='relu', strides=2)(decoder)
@@ -81,4 +83,4 @@ def create_dec_dense(input_shape=256, img_size=(6,6,8)):
     decoder = Conv2DTranspose(32, kernel_size=(3,3), activation='relu', strides=1)(decoder)
     decoder = Conv2DTranspose(16, kernel_size=(3,3), activation='relu', strides=1)(decoder)
     decoder = Conv2DTranspose(1, kernel_size=(3,3), activation='relu', strides=1)(decoder)
-    return decoder
+    return Model(inputs, decoder)
