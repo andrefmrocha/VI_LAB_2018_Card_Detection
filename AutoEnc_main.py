@@ -25,3 +25,4 @@ decoder.summary()
 
 input_card = Input(shape=input_shape)
 input_camera = Input(shape=input_shape)
+
