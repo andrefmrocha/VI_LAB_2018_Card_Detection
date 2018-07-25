@@ -82,5 +82,5 @@ def create_dec_dense(input_shape=(256,), img_size=(5,5,8)):
     decoder = Conv2DTranspose(64, kernel_size=(3,3), activation='relu', strides=1, padding="same")(decoder)
     decoder = Conv2DTranspose(32, kernel_size=(3,3), activation='relu', strides=1, padding="same")(decoder)
     decoder = Conv2DTranspose(16, kernel_size=(3,3), activation='relu', strides=1, padding="same")(decoder)
-    decoder = Conv2DTranspose(1, kernel_size=(3,3), activation='relu', strides=1, padding="same")(decoder)
+    decoder = Conv2DTranspose(3, kernel_size=(3,3), activation='relu', strides=1, padding="same")(decoder)
     return Model(inputs=inputs, outputs=decoder)
