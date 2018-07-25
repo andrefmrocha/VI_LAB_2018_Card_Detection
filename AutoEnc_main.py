@@ -32,9 +32,16 @@ x_Camera = np.array(x_Train["camera"])
 x_Val["card"] = np.array(x_Val["card"])
 x_Val["camera"] = np.array(x_Val["camera"])
 
+auto_encoder.fit(x=x_Camera, y=x_Card, epochs=20, batch_size=32, validation_data=(x_Val["camera"],x_Val["card"]))
+
+json_model = auto_encoder.to_json()
+with open("auto_encoder_camera_card.json",'w') as json:
+    json.write(json_model)
+
+
 auto_encoder.fit(x=x_Card, y=x_Camera, epochs=20, batch_size=32, validation_data=(x_Val["card"],x_Val["camera"]))
 
 json_model = auto_encoder.to_json()
-with open("auto_encoder.json",'w') as json:
+with open("auto_encoder_card_camera.json",'w') as json:
     json.write(json_model)
 
